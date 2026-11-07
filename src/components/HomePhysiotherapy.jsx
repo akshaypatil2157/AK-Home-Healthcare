@@ -1,10 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import physiotherapyImage from "../images/Physio.jpg"; // Replace with your physiotherapy image path
 
 const HomePhysiotherapy = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="physiotherapy-page">
       {/* HERO SECTION */}

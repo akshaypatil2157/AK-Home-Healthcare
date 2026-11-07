@@ -741,19 +741,6 @@ const HeroSection = ({ onApplyClick }) => {
     });
   };
 
-  // Apply Now button
-  const handleApplyClick = () => {
-    setShowJobForm(true);
-
-    // Smooth scroll to application form
-    setTimeout(() => {
-      document.getElementById("job-application-form")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 100);
-  };
-
   // Submit Assessment / Lead Form
   const handleLeadSubmit = (e) => {
     e.preventDefault();

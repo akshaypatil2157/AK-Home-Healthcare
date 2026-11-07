@@ -1,10 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import icuImage from "../images/ICU.jpg"; // Replace with your ICU image path
 
 const HomeIcuServices = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="icu-services-page">
       {/* HERO SECTION */}
