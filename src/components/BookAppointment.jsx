@@ -198,15 +198,10 @@
 
 // export default BookAppointment;
 
-import React, { useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
+import React, { useState } from "react";
+import { submitJson } from "../api.jsx";
 
 const BookAppointment = () => {
-  // 1. Initialize EmailJS with your Public Key on mount
-  useEffect(() => {
-    emailjs.init("rU445AC1MBjX8hz95");
-  }, []);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -235,45 +230,20 @@ const BookAppointment = () => {
     e.preventDefault();
     setStatus({ loading: true, success: false, error: "" });
 
-    // 2. Map form state to match your exact EmailJS template tags
-    const templateParams = {
-      to_email: "akshaydesale257@gmail.com",
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      service: formData.service,
-      requiredBy: formData.requiredBy,
-      location: formData.location,
-      appointmentDate: formData.appointmentDate,
-    };
-
     try {
-      const response = await emailjs.send(
-        "service_alt9ec6", // Service ID
-        "template_a0bwq19", // Template ID
-        templateParams,
-        "8iPxtGb3qFe86wAvW" // Public Key
-      );
-
-      if (response.status === 200) {
-        setStatus({
-          loading: false,
-          success: true,
-          error: "",
-        });
-
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          service: "",
-          requiredBy: "",
-          location: "",
-          appointmentDate: "",
-        });
-      }
+      await submitJson("/api/appointments", formData);
+      setStatus({ loading: false, success: true, error: "" });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        requiredBy: "",
+        location: "",
+        appointmentDate: "",
+      });
     } catch (err) {
-      console.error("EmailJS Error details:", err);
+      console.error("Appointment error:", err);
       setStatus({
         loading: false,
         success: false,

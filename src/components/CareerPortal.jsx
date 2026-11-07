@@ -530,8 +530,8 @@
 // export default JobApplication;
 
 import React, { useState } from "react";
-import emailjs from "@emailjs/browser";
 import { Undo2 } from 'lucide-react';
+import { submitFormData } from "../api.jsx";
 
 const JobApplication = () => {
   const [formData, setFormData] = useState({
@@ -559,57 +559,23 @@ const JobApplication = () => {
     }));
   };
 
-  // Convert uploaded file to Base64 format for EmailJS attachment
-  const convertFileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
 
     try {
-      let base64Resume = "";
+      const applicationData = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== null && value !== "") applicationData.append(key, value);
+      });
 
-      // If user uploaded a resume file, convert it to base64
-      if (formData.resume) {
-        base64Resume = await convertFileToBase64(formData.resume);
-      }
-
-      // Parameters passed to EmailJS template
-      const templateParams = {
-        to_email: "akshaydesale257@gmail.com",
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        education: formData.education,
-        experience: formData.experience,
-        position: formData.position,
-        location: formData.location,
-        skills: formData.skills,
-        message: formData.message,
-        // Passing base64 data allows EmailJS to attach the file
-        content: base64Resume, 
-      };
-
-      // REPLACE WITH YOUR ACTUAL EMAILJS KEYS
-      await emailjs.send(
-        "service_alt9ec6",   // Service ID from EmailJS
-        "template_17qw729",  // Template ID from EmailJS
-        templateParams,
-        "8iPxtGb3qFe86wAvW"    // Public Key from EmailJS
-      );
+      await submitFormData("/api/career-applications", applicationData);
 
       setSubmitted(true);
     } catch (error) {
-      console.error("EmailJS Send Error:", error);
-      setErrorMessage("Failed to send application. Please verify your EmailJS keys.");
+      console.error("Career application error:", error);
+      setErrorMessage(error.message || "Failed to submit application. Please try again.");
     } finally {
       setLoading(false);
     }

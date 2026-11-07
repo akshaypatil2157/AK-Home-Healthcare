@@ -688,10 +688,10 @@
 
 // export default Services;
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { MoveRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import emailjs from "@emailjs/browser";
+import { submitJson } from "../api.jsx";
 import bedsideImage from "../images/bedside-care.png";
 
 const Services = () => {
@@ -700,11 +700,6 @@ const Services = () => {
   const [openFaq, setOpenFaq] = useState(null);
 
   const appointmentRef = useRef(null);
-
-  // Initialize EmailJS on component load
-  useEffect(() => {
-    emailjs.init("rU445AC1MBjX8hz95"); // Your EmailJS Public Key
-  }, []);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -759,13 +754,13 @@ const Services = () => {
     }, 100);
   };
 
-  // Handle EmailJS Form Submission
+  // Handle appointment form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ loading: true, success: false, error: "" });
 
-    const templateParams = {
-      to_email: "akshaydesale257@gmail.com",
+    try {
+      await submitJson("/api/appointments", {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
@@ -773,40 +768,23 @@ const Services = () => {
       requiredBy: formData.requiredBy,
       location: formData.location,
       appointmentDate: formData.appointmentDate,
-    };
+      });
 
-    try {
-      const response = await emailjs.send(
-        "service_alt9ec6",  // Service ID
-        "template_a0bwq19", // Template ID
-        templateParams,
-        "8iPxtGb3qFe86wAvW"  // Public Key
-      );
-
-      if (response.status === 200) {
-        setStatus({
-          loading: false,
-          success: true,
-          error: "",
-        });
-
-        // Reset form inputs
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          service: "",
-          requiredBy: "",
-          location: "",
-          appointmentDate: "",
-        });
-      }
+      setStatus({ loading: false, success: true, error: "" });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        requiredBy: "",
+        location: "",
+        appointmentDate: "",
+      });
     } catch (err) {
-      console.error("EmailJS Submission Error:", err);
       setStatus({
         loading: false,
         success: false,
-        error: "Failed to send appointment request. Please try again.",
+        error: err.message,
       });
     }
   };

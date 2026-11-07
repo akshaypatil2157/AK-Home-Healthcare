@@ -699,7 +699,7 @@
 // export default HeroSection;
 
 import React, { useState } from "react";
-//import { submitLeadForm } from "../firebase";
+import { submitFormData, submitJson } from "../api.jsx";
 
 import strokeImage from "../images/frontb.jpg";
 
@@ -742,7 +742,7 @@ const HeroSection = ({ onApplyClick }) => {
   };
 
   // Submit Assessment / Lead Form
-  const handleLeadSubmit = (e) => {
+  const handleLeadSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.name || !formData.phone || !formData.location) {
@@ -760,8 +760,14 @@ const HeroSection = ({ onApplyClick }) => {
       error: "",
     });
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      await submitJson("/api/leads", {
+        name: formData.name,
+        phone: formData.phone,
+        location: formData.location,
+        email: formData.email,
+      });
+
       setLeadStatus({
         loading: false,
         success: true,
@@ -774,7 +780,13 @@ const HeroSection = ({ onApplyClick }) => {
         phone: "",
         location: "",
       }));
-    }, 800);
+    } catch (error) {
+      setLeadStatus({
+        loading: false,
+        success: false,
+        error: error.message,
+      });
+    }
   };
 
   // Submit Job Application
@@ -804,9 +816,12 @@ const HeroSection = ({ onApplyClick }) => {
     });
 
     try {
-      console.log("Job Application:", formData);
+      const applicationData = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== null && value !== "") applicationData.append(key, value);
+      });
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await submitFormData("/api/career-applications", applicationData);
 
       setJobStatus({
         loading: false,

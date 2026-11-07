@@ -8,6 +8,9 @@ import HomeNursingCare from "./components/HomeNursingCare";
 import HomePhysiotherapy from "./components/HomePhysiotherapy";
 import HomeIcuServices from "./components/HomeIcuServices";
 import ElderlyCareServices from "./components/ElderlyCareServices";
+import MedicalEquipment from "./components/MedicalEquipment";
+import MotherBabyCare from "./components/MotherBabycare";
+import BookAppointment from "./components/BookAppointment";
 import "./App.css";
 
 function App() {
@@ -42,6 +45,9 @@ function App() {
             <Route path="/HomePhysiotherapy" element={<HomePhysiotherapy />} />
             <Route path="/HomeICUServices" element={<HomeIcuServices />} />
             <Route path="/elderly-care-services" element={<ElderlyCareServices />} />
+            <Route path="/MedicalEquipment" element={<MedicalEquipment />} />
+            <Route path="/MotherBabycare" element={<MotherBabyCare />} />
+            <Route path="/book-appointment" element={<BookAppointment />} />
             <Route path="/CareerPortal" element={<CareerPortal />} />
             
             

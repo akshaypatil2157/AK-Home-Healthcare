@@ -1,10 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import motherBabyImage from "../images/babymother.png"; // Replace with your mother & baby image path
 
 const MotherBabyCare = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="mother-baby-page">
       {/* HERO SECTION */}
