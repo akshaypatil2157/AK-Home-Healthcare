@@ -1,11 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
 import equipmentImage from "../images/equipment.png"; // Replace with your medical equipment image path
 
 const MedicalEquipment = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="medical-equipment-page">
       {/* HERO SECTION */}

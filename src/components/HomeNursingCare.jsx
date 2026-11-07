@@ -1,10 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import nursingImage from "../images/nursingcare.png";
 
 const HomeNursingCare = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="home-nursing-page">
 

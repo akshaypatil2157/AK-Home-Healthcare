@@ -1,6 +1,5 @@
 import React from 'react';
 import elder from '../images/elder.jpg'; // Replace with your elderly care image path
-import { useNavigate } from 'react-router-dom';
 const ElderlyCareServices = () => {
   return (
     <div className="elderly-care-container">
