@@ -237,7 +237,7 @@ const BookAppointment = () => {
 
     // 2. Map form state to match your exact EmailJS template tags
     const templateParams = {
-      to_email: "ampatil138@gmail.com",
+      to_email: "akshaydesale257@gmail.com",
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
@@ -249,10 +249,10 @@ const BookAppointment = () => {
 
     try {
       const response = await emailjs.send(
-        "service_273dvak", // Service ID
-        "template_4q9esne", // Template ID
+        "service_alt9ec6", // Service ID
+        "template_a0bwq19", // Template ID
         templateParams,
-        "rU445AC1MBjX8hz95" // Public Key
+        "8iPxtGb3qFe86wAvW" // Public Key
       );
 
       if (response.status === 200) {

@@ -584,7 +584,7 @@ const JobApplication = () => {
 
       // Parameters passed to EmailJS template
       const templateParams = {
-        to_email: "ampatil138@gmail.com",
+        to_email: "akshaydesale257@gmail.com",
         name: formData.name,
         phone: formData.phone,
         email: formData.email,
@@ -600,10 +600,10 @@ const JobApplication = () => {
 
       // REPLACE WITH YOUR ACTUAL EMAILJS KEYS
       await emailjs.send(
-        "service_273dvak",   // Service ID from EmailJS
-        "template_n9pdzsg",  // Template ID from EmailJS
+        "service_alt9ec6",   // Service ID from EmailJS
+        "template_17qw729",  // Template ID from EmailJS
         templateParams,
-        "rU445AC1MBjX8hz95"    // Public Key from EmailJS
+        "8iPxtGb3qFe86wAvW"    // Public Key from EmailJS
       );
 
       setSubmitted(true);
